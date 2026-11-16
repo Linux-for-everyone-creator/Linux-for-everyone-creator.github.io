@@ -1,0 +1,130 @@
+/* Linux for everyone – einfaches, barrierefreies Aussehen.
+   Farben angelehnt an ArtCraft (Screenshot vom 16.11.2026), dazu Grün.
+   Kontrast nachgerechnet (WCAG): Text 15,8:1 · Links 7,4:1 · Menü 15,8:1 */
+:root {
+  --hintergrund: #F2F1ED;   /* ArtCraft: helles Papier-Grau */
+  --text: #17171B;          /* ArtCraft: fast Schwarz */
+  --kopf: #17171B;          /* dunkle Kopfzeile wie die ArtCraft-Knöpfe */
+  --kopf-text: #F2F1ED;
+  --link: #0F5A30;          /* dunkles Grün, gut lesbar auf Hell */
+  --gruen: #229C55;         /* ArtCraft-Grün, nur für Linien/Rahmen */
+  --gruen-hell: #09D995;    /* helles Grün auf dunklem Grund */
+  --fokus: #17171B;
+  --flaeche: #E4E2DB;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { font-size: 125%; } /* 20 px Grundschrift */
+
+body {
+  margin: 0;
+  background: var(--hintergrund);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  line-height: 1.6;
+}
+
+main, .kopf nav, .fuss {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+main { padding-top: 1.5rem; padding-bottom: 2rem; }
+
+h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 1rem; }
+h2 { font-size: 1.4rem; margin: 2rem 0 0.5rem; }
+
+a { color: var(--link); text-decoration: underline; text-underline-offset: 0.15em; }
+
+/* Gut sichtbarer Rahmen für Tastatur-Nutzer */
+a:focus-visible {
+  outline: 4px solid var(--fokus);
+  outline-offset: 3px;
+}
+
+/* Sprunglink: erscheint erst, wenn man mit Tab hinkommt */
+.sprunglink {
+  position: absolute;
+  left: 1rem;
+  top: -10rem;
+  background: var(--kopf);
+  color: var(--kopf-text);
+  padding: 0.6rem 1rem;
+  z-index: 10;
+}
+.sprunglink:focus { top: 1rem; }
+
+/* Kopfzeile mit Menü */
+.kopf { background: var(--kopf); border-bottom: 4px solid var(--gruen); }
+.kopf ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+.kopf a {
+  display: inline-block;
+  color: var(--kopf-text);
+  padding: 0.5rem 0.25rem; /* große Klickfläche */
+  font-weight: 600;
+}
+.kopf a[aria-current="page"] { color: var(--gruen-hell); text-decoration-thickness: 3px; }
+.kopf a:focus-visible, .sprunglink:focus-visible { outline-color: var(--gruen-hell); }
+
+/* Projekt-Kasten */
+.projekt {
+  background: var(--flaeche);
+  border-left: 6px solid var(--gruen);
+  padding: 0.5rem 1rem 1rem;
+  margin-top: 2rem;
+}
+.projekt h2 { margin-top: 0.5rem; }
+
+/* Platz für das Foto */
+.foto-platz, .foto {
+  display: block;
+  width: 12rem;
+  max-width: 100%;
+  aspect-ratio: 1;
+  margin: 0 0 1.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.foto-platz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--flaeche);
+  border: 3px dashed var(--gruen);
+  font-weight: 600;
+}
+
+/* Fußzeile */
+.fuss {
+  border-top: 3px solid var(--gruen);
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+.fuss ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+.fuss a { display: inline-block; padding: 0.5rem 0.25rem; }
+
+/* Nur für Screenreader sichtbar */
+.unsichtbar {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
